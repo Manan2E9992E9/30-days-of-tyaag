@@ -16,14 +16,15 @@ export default function DayPage() {
 
   const [showForm, setShowForm] = useState(false);
 
-  const [name,setName] = useState("");
-  const [phone,setPhone] = useState("");
-  const [kshetra,setKshetra] = useState("");
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [kshetra, setKshetra] = useState("");
 
-  const [loading,setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
 
 
-  if(!tyaag){
+  if (!tyaag) {
     return (
       <main className="min-h-screen flex items-center justify-center">
         Tyaag not found
@@ -32,21 +33,22 @@ export default function DayPage() {
   }
 
 
-  async function submitTyaag(e:React.FormEvent){
+  async function submitTyaag(e: React.FormEvent) {
 
     e.preventDefault();
 
     setLoading(true);
+    setMessage("");
 
 
-    const {error} = await supabase
-      .from("tyaag_completions")
+    const { error } = await supabase
+      .from("submissions")
       .insert([
         {
           day: tyaag.id,
-          full_name:name,
-          phone,
-          kshetra
+          full_name: name,
+          phone: phone,
+          kshetra: kshetra
         }
       ]);
 
@@ -54,19 +56,18 @@ export default function DayPage() {
     setLoading(false);
 
 
-    if(error){
-      alert(error.message);
+    if (error) {
+      setMessage("❌ Submission failed. Please try again.");
       return;
     }
 
 
-    alert("Tyaag Completed 🙏");
-
-    setShowForm(false);
+    setMessage("✅ Your Tyaag has been completed successfully 🙏");
 
     setName("");
     setPhone("");
     setKshetra("");
+
   }
 
 
@@ -88,7 +89,6 @@ export default function DayPage() {
 
       <div className="max-w-3xl mx-auto mt-10">
 
-
         <div className="
           bg-white
           rounded-[2rem]
@@ -104,7 +104,7 @@ export default function DayPage() {
 
             <div className="bg-orange-100 p-4 rounded-2xl">
 
-              <Sparkles 
+              <Sparkles
                 className="text-orange-600"
                 size={35}
               />
@@ -120,9 +120,11 @@ export default function DayPage() {
           </p>
 
 
+
           <h1 className="text-5xl font-black mt-4">
             {tyaag.title}
           </h1>
+
 
 
           <p className="mt-4 text-gray-500">
@@ -132,20 +134,17 @@ export default function DayPage() {
 
 
           <button
-
-            onClick={()=>setShowForm(true)}
-
+            onClick={() => setShowForm(true)}
             className="
-            mt-10
-            w-full
-            bg-orange-600
-            text-white
-            py-4
-            rounded-2xl
-            font-bold
-            text-lg
+              mt-10
+              w-full
+              bg-orange-600
+              text-white
+              py-4
+              rounded-2xl
+              font-bold
+              text-lg
             "
-
           >
 
             <span className="flex justify-center gap-2 items-center">
@@ -156,109 +155,101 @@ export default function DayPage() {
 
             </span>
 
-
           </button>
 
 
         </div>
-
 
       </div>
 
 
 
 
-      {
-        showForm && (
+      {showForm && (
 
         <div className="
-        fixed inset-0
-        bg-black/40
-        flex items-center justify-center
-        px-5
+          fixed inset-0
+          bg-black/40
+          flex items-center justify-center
+          px-5
         ">
 
 
           <form
-          onSubmit={submitTyaag}
-          className="
-          bg-white
-          rounded-3xl
-          p-8
-          w-full
-          max-w-md
-          "
+            onSubmit={submitTyaag}
+            className="
+              bg-white
+              rounded-3xl
+              p-8
+              w-full
+              max-w-md
+            "
           >
 
 
-          <h2 className="text-2xl font-bold mb-6 text-center">
-            Complete Tyaag
-          </h2>
+            <h2 className="text-2xl font-bold mb-6 text-center">
+              Complete Tyaag
+            </h2>
 
 
 
-          <input
-          required
-          placeholder="Name"
-          value={name}
-          onChange={e=>setName(e.target.value)}
-          className="w-full border p-3 rounded-xl mb-4"
-          />
+            <input
+              required
+              placeholder="Name"
+              value={name}
+              onChange={(e)=>setName(e.target.value)}
+              className="w-full border p-3 rounded-xl mb-4"
+            />
 
 
 
-          <input
-          required
-          placeholder="Phone Number"
-          value={phone}
-          onChange={e=>setPhone(e.target.value)}
-          className="w-full border p-3 rounded-xl mb-4"
-          />
+            <input
+              required
+              placeholder="Phone Number"
+              value={phone}
+              onChange={(e)=>setPhone(e.target.value)}
+              className="w-full border p-3 rounded-xl mb-4"
+            />
 
 
 
-          <input
-          required
-          placeholder="Kshetra"
-          value={kshetra}
-          onChange={e=>setKshetra(e.target.value)}
-          className="w-full border p-3 rounded-xl mb-6"
-          />
+            <input
+              required
+              placeholder="Kshetra"
+              value={kshetra}
+              onChange={(e)=>setKshetra(e.target.value)}
+              className="w-full border p-3 rounded-xl mb-6"
+            />
 
 
 
-          <button
-          disabled={loading}
-          className="
-          w-full
-          bg-orange-600
-          text-white
-          py-3
-          rounded-xl
-          font-bold
-          "
-          >
+            <button
+              disabled={loading}
+              className="
+                w-full
+                bg-orange-600
+                text-white
+                py-3
+                rounded-xl
+                font-bold
+              "
+            >
 
-          {
-            loading 
-            ? "Submitting..."
-            : "Submit"
-          }
+              {loading ? "Submitting..." : "Submit"}
 
-          </button>
+            </button>
 
 
 
+           {message && (
+
+              <p className="mt-4 text-center font-semibold">
+                {message}
+              </p>
+            )}
           </form>
-
-
         </div>
-
-        )
-      }
-
-
+      )}
     </main>
-
   );
 }
