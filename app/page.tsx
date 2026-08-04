@@ -30,17 +30,7 @@ export default function Home() {
             </p>
           </div>
         </div>
-
-        <Link
-          href="/admin"
-          className="text-sm text-gray-500 hover:text-orange-600 transition"
-        >
-          Admin
-        </Link>
-
-      </nav>
-
-
+     </nav>
       {/* HERO */}
       <section className="px-6 pt-10 pb-16 text-center">
 
@@ -53,93 +43,57 @@ export default function Home() {
             />
           </div>
         </div>
-
-
         <h1 className="text-5xl md:text-7xl font-black tracking-tight text-orange-600">
           त्याग की छतरी
         </h1>
-
-
         <p className="mt-5 text-xl md:text-2xl font-semibold text-gray-800">
           Small sacrifices. Bigger growth.
         </p>
-
-
         <p className="mt-4 max-w-xl mx-auto text-gray-600 text-lg leading-relaxed">
           हर दिन एक छोटा त्याग,
           <br />
           हर दिन आत्मविकास की ओर एक कदम।
         </p>
-
       </section>
-
-
-
       {/* PROGRESS CARD */}
       <section className="max-w-xl mx-auto px-6">
-
         <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl border border-orange-100 p-8">
-
           <div className="flex justify-between items-center">
-
             <div>
               <p className="text-sm text-gray-500">
                 Current Progress
               </p>
-
               <h2 className="text-3xl font-bold mt-1">
                 Day {currentDay} / 31
               </h2>
             </div>
-
-
             <div className="bg-orange-100 p-4 rounded-2xl">
               <Flame className="text-orange-600" size={32}/>
             </div>
-
           </div>
-
-
           <div className="mt-6 h-3 bg-gray-200 rounded-full overflow-hidden">
-
             <div
               className="h-full bg-gradient-to-r from-orange-500 to-yellow-400 rounded-full transition-all duration-700"
               style={{
                 width:`${progress}%`
               }}
             />
-
           </div>
-
-
           <p className="mt-3 text-sm text-gray-500">
             {progress}% completed
           </p>
-
         </div>
-
       </section>
-
-
-
-
       {/* TODAY CARD */}
       <section className="max-w-4xl mx-auto px-6 mt-16">
-
         <div className="relative overflow-hidden bg-white rounded-[2rem] shadow-2xl border border-orange-100 p-10 text-center">
-
-
           <Sparkles
             className="absolute top-6 right-6 text-yellow-400"
             size={30}
           />
-
-
           <p className="uppercase tracking-[0.3em] text-orange-500 font-bold text-sm">
             Today's Tyaag
           </p>
-
-
           <h2 className="mt-5 text-4xl font-black">
             {tyaags[currentDay-1]?.title}
           </h2>
@@ -161,10 +115,6 @@ export default function Home() {
         </div>
 
       </section>
-
-
-
-
       {/* JOURNEY */}
 
       <section className="text-center mt-24 px-6">

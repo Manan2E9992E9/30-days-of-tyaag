@@ -11,17 +11,27 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(true);
 
   async function loadData() {
-    const { data, error } = await supabase
-      .from("submissions")
-      .select("*")
-      .order("created_at", { ascending: false });
 
-    if (!error) {
-      setSubmissions(data || []);
-    }
+  const { data, error } = await supabase
+    .from("submissions")
+    .select("*")
+    .order("created_at", { ascending: false });
 
+
+  console.log("SUPABASE DATA:", data);
+  console.log("SUPABASE ERROR:", error);
+
+
+  if (error) {
+    alert(error.message);
     setLoading(false);
+    return;
   }
+
+
+  setSubmissions(data || []);
+  setLoading(false);
+}
 
   useEffect(() => {
     if (localStorage.getItem("admin") !== "true") {
@@ -59,15 +69,12 @@ export default function AdminPage() {
     const blob = new Blob([csv], {
       type: "text/csv"
     });
-
     const url = URL.createObjectURL(blob);
-
     const a = document.createElement("a");
     a.href = url;
     a.download = "tyaag-submissions.csv";
     a.click();
   }
-
   if (loading) {
     return (
       <main className="min-h-screen bg-[#fff8ed] flex items-center justify-center">
@@ -80,15 +87,12 @@ export default function AdminPage() {
 
   return (
     <main className="min-h-screen bg-[#fff8ed] p-6 md:p-10">
-
       <div className="flex items-center gap-5 mb-10">
-
         <img
           src="/logo.png"
           alt="Tyaag Logo"
           className="w-20 h-20 object-contain"
         />
-
         <div>
           <h1 className="text-4xl font-bold text-[#8b4513]">
             Admin Dashboard
