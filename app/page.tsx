@@ -3,11 +3,19 @@ import { Lock, Flame, CheckCircle, Sparkles } from "lucide-react";
 import { tyaags } from "../data/tyaags";
 
 export default function Home() {
-  const today = new Date().getDate();
-  const currentDay = Math.min(today, 31);
+  const startDate = new Date(2026, 7, 1); // 1 August 2026
+const today = new Date();
 
-  const progress = Math.round((currentDay / 31) * 100);
+startDate.setHours(0, 0, 0, 0);
+today.setHours(0, 0, 0, 0);
 
+const daysPassed = Math.floor(
+  (today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
+);
+
+const currentDay = Math.max(1, Math.min(daysPassed + 1, 31));
+
+const progress = Math.round((currentDay / 31) * 100);
   return (
     <main className="min-h-screen bg-gradient-to-br from-[#fff7ed] via-white to-[#fef3c7] text-gray-900">
 

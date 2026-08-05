@@ -22,6 +22,28 @@ export default function DayPage() {
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const startDate = new Date(2026, 7, 1); // 1 August 2026
+const today = new Date();
+
+startDate.setHours(0, 0, 0, 0);
+today.setHours(0, 0, 0, 0);
+
+const daysPassed = Math.floor(
+  (today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
+);
+
+const currentDay = Math.max(1, Math.min(daysPassed + 1, 31));
+
+const isUnlocked = dayId <= currentDay;
+
+const challengeDate = new Date(startDate);
+challengeDate.setDate(startDate.getDate() + (dayId - 1));
+
+const formattedDate = challengeDate.toLocaleDateString("en-IN", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
 
 
   if (!tyaag) {
@@ -31,6 +53,24 @@ export default function DayPage() {
       </main>
     );
   }
+  if (!isUnlocked) {
+  return (
+    <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-50 via-white to-yellow-50">
+      <div className="bg-white p-8 rounded-3xl shadow-xl text-center">
+        <h1 className="text-3xl font-bold mb-4">🔒 Challenge Locked</h1>
+
+        <p>This challenge unlocks on {formattedDate}.</p>
+
+        <Link
+          href="/"
+          className="inline-block mt-6 bg-orange-600 text-white px-6 py-3 rounded-xl"
+        >
+          Back Home
+        </Link>
+      </div>
+    </main>
+  );
+}
 
 
   async function submitTyaag(e: React.FormEvent) {
@@ -84,7 +124,7 @@ export default function DayPage() {
         <ArrowLeft size={20}/>
         Back Home
       </Link>
-
+      
 
 
       <div className="max-w-3xl mx-auto mt-10">
@@ -128,23 +168,31 @@ export default function DayPage() {
 
 
           <p className="mt-4 text-gray-500">
-            {tyaag.date}
+            {formattedDate}
           </p>
 
 
 
           <button
-            onClick={() => setShowForm(true)}
-            className="
-              mt-10
-              w-full
-              bg-orange-600
-              text-white
-              py-4
-              rounded-2xl
-              font-bold
-              text-lg
-            "
+            onClick={() => {
+  if (isUnlocked) {
+    setShowForm(true);
+  }
+}}
+disabled={!isUnlocked}
+className={`
+  mt-10
+  w-full
+  py-4
+  rounded-2xl
+  font-bold
+  text-lg
+  ${
+    isUnlocked
+      ? "bg-orange-600 text-white"
+      : "bg-gray-300 text-gray-600 cursor-not-allowed"
+  }
+`}
           >
 
             <span className="flex justify-center gap-2 items-center">
