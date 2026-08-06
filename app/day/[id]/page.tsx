@@ -22,7 +22,8 @@ export default function DayPage() {
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-  const startDate = new Date(2026, 7, 1); // 1 August 2026
+  const year = new Date().getFullYear();
+const startDate = new Date(year, 7, 1); // 1 August 2026
 const today = new Date();
 
 startDate.setHours(0, 0, 0, 0);
@@ -35,6 +36,13 @@ const daysPassed = Math.floor(
 const currentDay = Math.max(1, Math.min(daysPassed + 1, 31));
 
 const isUnlocked = dayId <= currentDay;
+console.log({
+  today: today.toISOString(),
+  daysPassed,
+  currentDay,
+  dayId,
+  isUnlocked,
+});
 
 const challengeDate = new Date(startDate);
 challengeDate.setDate(startDate.getDate() + (dayId - 1));
@@ -174,15 +182,15 @@ const formattedDate = challengeDate.toLocaleDateString("en-IN", {
 
 
           <button
+          disabled={!isUnlocked}
+
             onClick={() => {
   if (isUnlocked) {
     setShowForm(true);
   }
 }}
-disabled={!isUnlocked}
 className={`
   mt-10
-  w-full
   py-4
   rounded-2xl
   font-bold
