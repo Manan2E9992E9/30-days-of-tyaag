@@ -3,8 +3,9 @@ import { Lock, Flame, CheckCircle, Sparkles } from "lucide-react";
 import { tyaags } from "../data/tyaags";
 
 export default function Home() {
-  const startDate = new Date(2026, 7, 1); // 1 August 2026
 const today = new Date();
+
+const startDate = new Date(today.getFullYear(), 7, 1);
 
 startDate.setHours(0, 0, 0, 0);
 today.setHours(0, 0, 0, 0);

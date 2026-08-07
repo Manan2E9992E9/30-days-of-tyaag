@@ -23,26 +23,21 @@ export default function DayPage() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const year = new Date().getFullYear();
-const startDate = new Date(year, 7, 1); // 1 August 2026
 const today = new Date();
 
+const startDate = new Date(today.getFullYear(), 7, 1); // August 1 of the current year
 startDate.setHours(0, 0, 0, 0);
-today.setHours(0, 0, 0, 0);
+
+const currentDate = new Date(today);
+currentDate.setHours(0, 0, 0, 0);
 
 const daysPassed = Math.floor(
-  (today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
+  (currentDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
 );
 
 const currentDay = Math.max(1, Math.min(daysPassed + 1, 31));
 
 const isUnlocked = dayId <= currentDay;
-console.log({
-  today: today.toISOString(),
-  daysPassed,
-  currentDay,
-  dayId,
-  isUnlocked,
-});
 
 const challengeDate = new Date(startDate);
 challengeDate.setDate(startDate.getDate() + (dayId - 1));
@@ -52,7 +47,6 @@ const formattedDate = challengeDate.toLocaleDateString("en-IN", {
   month: "long",
   year: "numeric",
 });
-
 
   if (!tyaag) {
     return (
