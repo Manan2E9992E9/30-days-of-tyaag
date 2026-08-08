@@ -5,7 +5,7 @@ import { tyaags } from "../data/tyaags";
 export default function Home() {
 const today = new Date();
 
-const startDate = new Date(today.getFullYear(), 8, 1);
+const startDate = new Date(today.getFullYear(), today.getMonth(), 1);
 
 startDate.setHours(0, 0, 0, 0);
 today.setHours(0, 0, 0, 0);
