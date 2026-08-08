@@ -22,26 +22,30 @@ export default function DayPage() {
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-  const year = new Date().getFullYear();
+
 const today = new Date();
 
-const startDate = new Date(today.getFullYear(), 7, 1); // August 1 of the current year
+// Tyaag officially starts on 1 August 2026
+const startDate = new Date(2026, 7, 1);
+
 startDate.setHours(0, 0, 0, 0);
 
-const currentDate = new Date(today);
+const currentDate = new Date();
 currentDate.setHours(0, 0, 0, 0);
 
 const daysPassed = Math.floor(
-  (currentDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
+  (currentDate.getTime() - startDate.getTime()) /
+    (1000 * 60 * 60 * 24)
 );
 
-const currentDay = Math.max(1, Math.min(daysPassed + 1, 31));
+const currentDay = Math.max(
+  1,
+  Math.min(daysPassed + 1, 31)
+);
 
 const isUnlocked = dayId <= currentDay;
 
-const challengeDate = new Date(startDate);
-challengeDate.setDate(startDate.getDate() + (dayId - 1));
-
+const challengeDate = new Date(2026, 7, dayId);
 const formattedDate = challengeDate.toLocaleDateString("en-IN", {
   day: "numeric",
   month: "long",
